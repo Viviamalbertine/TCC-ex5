@@ -12,7 +12,9 @@ import { LoginPage } from '../pages/login/login';
 import { LoginSuccessfulPage } from '../pages/login-successful/login-successful';
 import { AuthenticationService } from '../services/authentication.service';
 
-
+//
+//@Módulo da aplicacão carregado durante a execução. Neste módulo estão registradas as classes das páginas e de serviço de autenticação
+//
 @NgModule({
   declarations: [
     MyApp,

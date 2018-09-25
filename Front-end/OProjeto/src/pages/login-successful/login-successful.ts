@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+//
+//@Classe para a página de Login efetuado com sucesso
+//
 @IonicPage()
 @Component({
   selector: 'page-login-successful',
