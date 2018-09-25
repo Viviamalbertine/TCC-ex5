@@ -3,7 +3,6 @@
     "allowSyntheticDefaultImports": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
-    "strictNullChecks": true,
     "experimentalDecorators": true,
     "lib": [
       "dom",
