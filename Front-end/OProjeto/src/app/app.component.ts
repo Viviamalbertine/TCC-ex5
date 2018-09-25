@@ -4,6 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 
+//
+//@Classe raiz do aplicativo, através da qual a página de login é inserida na pilha do Ionic para renderização.
 @Component({
   templateUrl: 'app.html'
 })
