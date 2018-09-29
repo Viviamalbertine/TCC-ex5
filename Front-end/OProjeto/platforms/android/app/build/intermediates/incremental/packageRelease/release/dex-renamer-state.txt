@@ -1,4 +1,0 @@
-#Mon Sep 24 22:36:51 BRT 2018
-base.0=/Users/cristianodias/Desktop/TCC/Front-end/OProjeto/platforms/android/app/build/intermediates/transforms/dex/release/0
-renamed.0=classes.dex
-file.0=/Users/cristianodias/Desktop/TCC/Front-end/OProjeto/platforms/android/app/build/intermediates/transforms/dex/release/0/classes.dex

@@ -1,0 +1,31 @@
+Descrição do fluxo de uma solicitação
+    Para iniciação do fluxo, o usuário inicialmente abre o aplicativo no dispositivo. Assim que aberto, é mostrado ao mesmo a tela de autenticação.
+    O usuário então informa, os campos e-mail e senha e em seguida clica no botão Entrar na tela (login.html);
+1. O método onSubmit() da classe Login.ts é disparado e através dele obtém-se o acesso às informações do formulário. Em seguida, os dados são repassados à classe de serviço de autenticação;
+2. O método authenticate(login) recebe os dados de autenticação e em seguida os repassa para uma biblioteca que realiza solicitações HTTP, informando o endereço do serviço de autenticação junto com um objeto javascript (JSON) encapsulando o e-mail e senha. Foi utilizado o método post(url, dados de login) desta biblioteca para alcançar o servidor que, por vez, vai processar os dados enviados;
+3. A biblioteca HttpClient se encarrega de enviar as informações ao endereço informado;
+
+Neste momento, a requisição do cliente vai alcançar o servidor.
+
+4. O método Post(dados de login) da  classe controladora AuthenticationController.cs recebe os dados da requisição que, por vez, repassa os mesmos à classe de serviço de alunos;
+5. O método Authenticate(dados de login) da classe de serviço StudentServices.cs recebe os dados da classe controladora. Neste momento, é solicitada ao provedor de hashing o cálculo do código hash da senha;
+6. O método ComputeHash(senha) da classe HashProvider.cs recebe a senha e calcula o hash da mesma;
+7. O método ComputeHash(senha) retorna ao método Authenticate(dados de login) da classe de serviço StudentServices.cs o hash calculado;
+8. O método Authenticate(dados de login) da classe de serviço StudentServices.cs continua sua execução passando os dados de login e hash da senha para a classe de acesso a dados;
+9. O método GetByCredentials(login, hash da senha) da classe de acesso a dados StudentRepository.cs recebe os dados classe de serviço e faz uso da biblioteca EntityFramework para a realização da consulta na fonte de dados;
+10. A biblioteca EntityFramework cuida da comunicação com a fonte de dados, passando a ela as informações de login e senha a fim de encontrar os dados do aluno;
+
+Neste momento, inicia-se o processo de retorno de cada solicitação realizada pelas camadas superiores da aplicação.
+
+11. Caso o login e senha estejam corretos, o banco retornará um "ResultSet" contendo os dados do aluno e, com isto, o EntityFramework retornará um objeto Aluno contendo as informações provenientes do banco de dados. Caso contrário, um "Result Set" vazio será retornado e, com isto, o valor NULO será retornado pelo EntityFramework;
+12. O EntityFramework retorna ao método GetByCredentials(...) da classe StudentRepository.cs o resultado da consulta;
+13. O método GetByCredentials(...) da classe StudentRepository.cs retorna ao método Authenticate(...) da classe StudentServices.cs o resultado da consulta;
+14. O método Authenticate(...) da classe StudentServices.cs retorna ao método Post(...) da classe AuthenticationController.cs o resultado da consulta;
+15. O método Post(...) produz uma resposta HTTP a ser enviada de volta para o cliente com o resultado da consulta;
+
+Neste momento, o processamento no lado do cliente (aplicação móvel) é retomado.
+
+16. A biblioteca HttpClient retorna ao método authenticate(...) da classe AuthenticationService.ts o resultado da solicitação, incluindo o objeto que contém ou não os dados do aluno;
+17. O método authenticate(...) da classe AuthenticationService.ts retorna os dados da consulta ao método onSubmit() da classe Login.ts;
+18a. Se o resultado da solicitação contiver a propriedade 'success' com o valor TRUE, é mostrada ao usuário a página de sucesso na autenticação, LoginSuccessful.html;
+18b. Se o resultado da solicitação contiver a propriedade 'success' com o valor FALSE, é mostrada ao usuário a mensagem de usuário e/ou senha inválidos em Login.html;
